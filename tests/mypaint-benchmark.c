@@ -15,7 +15,7 @@
  */
 
 #include "mypaint-benchmark.h"
-#include <mypaint-glib-compat.h>
+#include <libmypaint/mypaint-glib-compat.h>
 
 #include <stdio.h>
 #include <string.h>

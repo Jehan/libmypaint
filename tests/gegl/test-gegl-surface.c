@@ -1,7 +1,7 @@
 
 #include <stddef.h>
 
-#include <mypaint-gegl-surface.h>
+#include <libmypaint-gegl/mypaint-gegl-surface.h>
 #include "mypaint-test-surface.h"
 
 MyPaintSurface *

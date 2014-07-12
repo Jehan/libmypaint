@@ -1,4 +1,4 @@
-#include <mypaint-config.h>
+#include <libmypaint/mypaint-config.h>
 
 #if MYPAINT_CONFIG_USE_GLIB
 

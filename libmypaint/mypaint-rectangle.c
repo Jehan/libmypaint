@@ -1,6 +1,3 @@
-#ifndef MYPAINTRECTANGLE_H
-#define MYPAINTRECTANGLE_H
-
 /* brushlib - The MyPaint Brush Library
  * Copyright (C) 2008 Martin Renold <martinxyz@gmx.ch>
  * Copyright (C) 2012 Jon Nordby <jononor@gmail.com>
@@ -18,21 +15,35 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include <mypaint-glib-compat.h>
+#include <libmypaint/mypaint-rectangle.h>
+#include <stdlib.h>
+#include <string.h>
 
-G_BEGIN_DECLS
+void *memdup(const void *src, size_t len)
+{
+        void *p = malloc(len);
+        if (p)
+            memcpy(p, src, len);
+        return p;
+}
 
-typedef struct {
-    int x;
-    int y;
-    int width;
-    int height;
-} MyPaintRectangle;
-
-void mypaint_rectangle_expand_to_include_point(MyPaintRectangle *r, int x, int y);
 MyPaintRectangle *
-mypaint_rectangle_copy(MyPaintRectangle *self);
+mypaint_rectangle_copy(MyPaintRectangle *self)
+{
+    return (MyPaintRectangle *)memdup(self, sizeof(MyPaintRectangle));
+}
 
-G_END_DECLS
+void
+mypaint_rectangle_expand_to_include_point(MyPaintRectangle *r, int x, int y)
+{
+    if (r->width == 0) {
+        r->width = 1; r->height = 1;
+        r->x = x; r->y = y;
+    } else {
+        if (x < r->x) { r->width += r->x-x; r->x = x; } else
+        if (x >= r->x+r->width) { r->width = x - r->x + 1; }
 
-#endif // MYPAINTRECTANGLE_H
+        if (y < r->y) { r->height += r->y-y; r->y = y; } else
+        if (y >= r->y+r->height) { r->height = y - r->y + 1; }
+    }
+}

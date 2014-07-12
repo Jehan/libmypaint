@@ -17,8 +17,8 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include <mypaint-glib-compat.h>
-#include <mypaint-brush-settings-gen.h>
+#include <libmypaint/mypaint-glib-compat.h>
+#include <libmypaint/mypaint-brush-settings-gen.h>
 
 typedef struct {
     const gchar *cname;

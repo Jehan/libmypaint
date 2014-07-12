@@ -99,7 +99,7 @@ if env['use_glib']:
 else:
     config_defines += '#define MYPAINT_CONFIG_USE_GLIB 0\n'
 
-config_file = env.Substfile("mypaint-config.h", "mypaint-config.h.in",
+config_file = env.Substfile("libmypaint/mypaint-config.h", "libmypaint/mypaint-config.h.in",
                             SUBST_DICT={'@DEFINES@': config_defines})
 
 def generate_cheaders(env, target, source):
@@ -111,11 +111,11 @@ def generate_cheaders(env, target, source):
     ])
     env.Execute(cmd)
 
-env.Command(['mypaint-brush-settings-gen.h', 'brushsettings-gen.h'],
+env.Command(['libmypaint/mypaint-brush-settings-gen.h', 'brushsettings-gen.h'],
             ['generate.py', 'brushsettings.py', 'brushsettings.json'],
             generate_cheaders)
 
-env.Clean('.', Glob('*-gen.h'))
+env.Clean('libmypaint/.', Glob('*-gen.h'))
 env.Clean('.', Glob('*.pyc'))
 env.Clean('.', Glob('*.o'))
 
@@ -124,8 +124,8 @@ env.Append(LIBS=libs)
 env.ParseConfig('pkg-config --cflags --libs %s' % ' '.join(pkg_deps))
 
 lib_builder = env.SharedLibrary if env['use_sharedlib'] else env.StaticPicLibrary
-sources = Glob("*.c")
-sources = [n for n in sources if not n.name == "libmypaint.c"]
+sources = Glob("libmypaint/*.c")
+sources = [n for n in sources if not n.name == "libmypaint/libmypaint.c"]
 brushlib = lib_builder('./mypaint', sources)
 
 create_pkgconfig_files(env, 'libmypaint', brushlib_version, 'MyPaint brush engine library',
@@ -134,16 +134,16 @@ create_pkgconfig_files(env, 'libmypaint', brushlib_version, 'MyPaint brush engin
 if env['enable_introspection']:
     gir, typelib = add_gobject_introspection(env, "MyPaint", brushlib_version,
                               "mypaint_", "MyPaint",
-                              Glob("*.c") + Glob("mypaint-*.h") +
-                              Glob("glib/mypaint-[!gegl]*.c") + Glob("glib/mypaint-[!gegl]*.h"),
+                              Glob("libmypaint/*.c") + Glob("libmypaint/mypaint-*.h") +
+                              Glob("libmypaint/glib/mypaint-[!gegl]*.c") + Glob("libmypaint/glib/mypaint-[!gegl]*.h"),
                               ['./'], brushlib, ['glib-2.0'], [])
 
     install_perms(env, '$prefix/share/gir-1.0', gir)
     install_perms(env, '$prefix/lib/girepository-1.0', typelib)
 
 install_perms(env, '$prefix/lib/', brushlib)
-install_perms(env, '$prefix/include/libmypaint', Glob("./mypaint-*.h"))
-install_perms(env, '$prefix/include/libmypaint/glib', Glob("./glib/mypaint-*.h"))
+install_perms(env, '$prefix/include/libmypaint', Glob("libmypaint/mypaint-*.h"))
+install_perms(env, '$prefix/include/libmypaint/glib', Glob("libmypaint/glib/mypaint-*.h"))
 install_perms(env, "$prefix/share/libmypaint", Glob("./*.py"))
 install_perms(env, "$prefix/share/libmypaint", "./brushsettings.json")
 
@@ -158,10 +158,10 @@ if env['enable_gegl']:
     gegl_env.Append(LIBPATH=['.'], LIBS=['mypaint'])
 
     lib_builder = gegl_env.SharedLibrary if env['use_sharedlib'] else gegl_env.StaticPicLibrary
-    brushlib_gegl = lib_builder('./mypaint-gegl', Glob("./gegl/*.c"))
+    brushlib_gegl = lib_builder('./mypaint-gegl', Glob("libmypaint-gegl/*.c"))
 
     install_perms(env, '$prefix/lib/', brushlib_gegl)
-    install_perms(env, '$prefix/include/libmypaint-gegl', Glob("./gegl/mypaint-gegl-*.h"))
+    install_perms(env, '$prefix/include/libmypaint-gegl', Glob("libmypaint-gegl/mypaint-gegl-*.h"))
 
     create_pkgconfig_files(env, 'libmypaint-gegl', brushlib_version, 'MyPaint brush engine library, with GEGL integration',
                            libname='mypaint-gegl', deps=deps + ['libmypaint'])
@@ -169,7 +169,7 @@ if env['enable_gegl']:
     if gegl_env['enable_introspection']:
         gir, typelib = add_gobject_introspection(gegl_env, "MyPaintGegl", brushlib_version,
                                   "mypaint_gegl", "MyPaintGegl",
-                                  Glob("gegl/*.c") + Glob("gegl/mypaint-gegl-*.h") +
+                                  Glob("libmypaint-gegl/*.c") + Glob("libmypaint-gegl/mypaint-gegl-*.h") +
                                   Glob("glib/mypaint-gegl*"),
                                   ['./', './gegl'], brushlib_gegl,
                                   ['glib-2.0', 'gegl-%s' % env['GEGL_VERSION']],

@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "mypaint-tiled-surface.h"
-#include "tiled-surface-private.h"
+#include "libmypaint/mypaint-tiled-surface.h"
+#include "libmypaint/tiled-surface-private.h"
 #include "mypaint-benchmark.h"
 
 // TODO: test

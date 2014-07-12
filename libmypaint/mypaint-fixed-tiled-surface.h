@@ -1,11 +1,11 @@
 #ifndef MYPAINTFIXEDTILEDSURFACE_H
 #define MYPAINTFIXEDTILEDSURFACE_H
 
-#include <mypaint-glib-compat.h>
+#include <libmypaint/mypaint-glib-compat.h>
 
 G_BEGIN_DECLS
 
-#include <mypaint-tiled-surface.h>
+#include <libmypaint/mypaint-tiled-surface.h>
 
 /**
  * MyPaintFixedTiledSurface:

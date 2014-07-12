@@ -18,8 +18,8 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-#include <mypaint-glib-compat.h>
-#include <mypaint-rectangle.h>
+#include <libmypaint/mypaint-glib-compat.h>
+#include <libmypaint/mypaint-rectangle.h>
 
 G_BEGIN_DECLS
 

@@ -1,5 +1,5 @@
 
-#include <mypaint-brush.h>
+#include <libmypaint/mypaint-brush.h>
 
 #include "testutils.h"
 

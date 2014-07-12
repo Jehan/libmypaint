@@ -1,7 +1,7 @@
 #ifndef MYPAINTGLIBCOMPAT_H
 #define MYPAINTGLIBCOMPAT_H
 
-#include <mypaint-config.h>
+#include <libmypaint/mypaint-config.h>
 
 #if MYPAINT_CONFIG_USE_GLIB
 

@@ -1,4 +1,4 @@
-#include "rng-double.h"
+#include "libmypaint/rng-double.h"
 
 #include <stdio.h>
 #include <stdlib.h>

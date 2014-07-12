@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <mypaint-fixed-tiled-surface.h>
+#include <libmypaint/mypaint-fixed-tiled-surface.h>
 
 typedef float MyPaintPixelType;
 
